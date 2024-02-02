@@ -17,7 +17,7 @@ def process_team_data(team_name):
     Money = Money.dropna()
 
     for val in Money.index:
-        Money["Salary"][val] = int(Money["Salary"][val].replace("$", ""))
+        Money["Salary"][val] = int(Money["Salary"][val].replace("$", "").replace(",", ""))
 
     Money.to_csv('team_salaries.csv')
 
@@ -54,5 +54,6 @@ def process_team_data(team_name):
     except FileNotFoundError:
         print(f"Roster file for {team_name} not found.")
 
-# Example usage
-process_team_data("Warriors")
+# Asking the user for the team name
+team_name = input("Please enter the team name: ")
+process_team_data(team_name)
