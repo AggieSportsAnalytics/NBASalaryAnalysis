@@ -19,6 +19,9 @@ def process_team_data(team_name):
     # Convert Salary to integer
     Money['Salary'] = Money['Salary'].replace("[\$,]", "", regex=True).astype(int)
 
+    # Calculate total salary
+    total_salary = Money['Salary'].sum()
+
     Money.to_csv('team_salaries.csv', index=False)
 
     # Initialize variables for each age group
@@ -48,7 +51,7 @@ def process_team_data(team_name):
     # Plotting the pie chart for age groups with percentage and money value
     plt.figure(figsize=(8, 8))
     plt.pie(age_groups.values(), labels=age_groups.keys(), autopct=autopct_format(age_groups.values()))
-    plt.title(f'Salary Distribution by Age Group for {team_name}')
+    plt.title(f'Salary Distribution by Age Group for {team_name}\nTotal Salary: ${total_salary:,}')
     plt.show()
 
     # Load and display the Roster dataset
