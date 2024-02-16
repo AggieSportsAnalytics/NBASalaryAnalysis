@@ -16,34 +16,38 @@ def process_team_data(team_name):
     Money = Money[["Player", "Age", "Salary"]]
     Money = Money.dropna()
 
-    for val in Money.index:
-        Money["Salary"][val] = int(Money["Salary"][val].replace("$", "").replace(",", ""))
+    # Convert Salary to integer
+    Money['Salary'] = Money['Salary'].replace("[\$,]", "", regex=True).astype(int)
 
-    Money.to_csv('team_salaries.csv')
+    Money.to_csv('team_salaries.csv', index=False)
 
     # Initialize variables for each age group
-    u23, a23_28, a29_33, o33 = 0, 0, 0, 0
+    age_groups = {'Under 23': 0, '23-28': 0, '29-33': 0, 'Over 33': 0}
 
     # Loop through the data and aggregate salaries based on age groups
-    for val in Money.index:
-        if Money["Age"][val] < 23:
-            u23 += Money["Salary"][val]
-        elif 23 <= Money["Age"][val] <= 28:
-            a23_28 += Money["Salary"][val]
-        elif 29 <= Money["Age"][val] <= 33:
-            a29_33 += Money["Salary"][val]
-        else: # Age is over 33
-            o33 += Money["Salary"][val]
+    for index, row in Money.iterrows():
+        age, salary = row['Age'], row['Salary']
 
-    # Creating a DataFrame for the new age groups and their salaries
-    age_group_salaries = pd.DataFrame({
-        'Age Group': ["Under 23", "23-28", "29-33", "Over 33"],
-        'Salary': [u23, a23_28, a29_33, o33]
-    })
+        if age < 23:
+            age_groups['Under 23'] += salary
+        elif 23 <= age <= 28:
+            age_groups['23-28'] += salary
+        elif 29 <= age <= 33:
+            age_groups['29-33'] += salary
+        else:  # Age is over 33
+            age_groups['Over 33'] += salary
 
-    # Plotting the pie chart
+    # Custom autopct function to show percentage and money value
+    def autopct_format(values):
+        def my_format(pct):
+            total = sum(values)
+            val = int(round(pct*total/100.0))
+            return '{p:.2f}%\n(${v:,})'.format(p=pct,v=val)
+        return my_format
+
+    # Plotting the pie chart for age groups with percentage and money value
     plt.figure(figsize=(8, 8))
-    plt.pie(age_group_salaries['Salary'], labels=age_group_salaries['Age Group'], autopct='%1.1f%%')
+    plt.pie(age_groups.values(), labels=age_groups.keys(), autopct=autopct_format(age_groups.values()))
     plt.title(f'Salary Distribution by Age Group for {team_name}')
     plt.show()
 
@@ -53,6 +57,11 @@ def process_team_data(team_name):
         print(Roster)
     except FileNotFoundError:
         print(f"Roster file for {team_name} not found.")
+
+# Example usage
+team_name = input("Please enter the team name: ")
+process_team_data(team_name)
+
 
 # Asking the user for the team name
 team_name = input("Please enter the team name: ")
