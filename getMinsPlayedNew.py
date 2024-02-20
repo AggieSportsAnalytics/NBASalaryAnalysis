@@ -2,8 +2,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 def process_team_data(team_name):
-    stats_file = f"{team_name}PlayerStats.csv"
-    salary_file = f"{team_name}Salary.csv"
+    stats_file = f"Data/{team_name}PlayerStats.csv"
+    salary_file = f"Data/{team_name}Salary.csv"
     standings_file = "NBAStandings.csv"
 
     stats_data = pd.read_csv(stats_file)
