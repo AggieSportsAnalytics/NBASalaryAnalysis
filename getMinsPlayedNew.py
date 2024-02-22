@@ -39,14 +39,11 @@ def process_team_data(team_name):
 
     # Matches the team name input with the input that is on the standings
     standing_index = standings_data[standings_data['Team'].str.lower() == team_name.lower()].index
-    if len(standing_index) == 0:
-        print(f"Team record not found for {team_name}.")
-        return
 
     # Extract team's record by the row index wherever the team name is
     team_record = standings_data.iloc[standing_index[0]]
 
-    team_record_str = f"{team_record['Team']}'s record: {team_record['Overall']}"
+    team_record_str = f"{team_record['Team']} record: {team_record['Overall']}"
 
     colors = ['#f44336', '#2986cc']
 
