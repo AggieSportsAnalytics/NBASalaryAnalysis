@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 
 def process_team_data(team_name):
     # File paths
-    stats_file = f"{team_name}PlayerStats.csv"
-    salary_file = f"{team_name}Salary.csv"
-    roster_file = f"{team_name}Roster.csv"
-    standings_file = "NBAStandings.csv"
+    stats_file = f"Data/{team_name}PlayerStats.csv"
+    salary_file = f"Data/{team_name}Salary.csv"
+    roster_file = f"Data/{team_name}Roster.csv"
+    standings_file = "Data/NBAStandings.csv"
 
 
     # Load datasets
@@ -90,19 +90,19 @@ def process_team_data(team_name):
     team_record_str = f"{team_record['Team']}'s record: {team_record['Overall']}"
 
     # Plotting
-    plt.figure(figsize=(24, 8))
+    plt.figure(figsize=(30, 10))
     plt.suptitle(f'Salary Distribution by Age Group for {team_name}\nTotal Salary: ${total_salary:,}\n{team_record_str}', fontsize=16, ha='center')
 
     plt.subplot(1, 3, 1)
-    plt.pie(age_groups.values(), labels=age_groups.keys(), autopct=autopct_format(age_groups.values()))
+    plt.pie(age_groups.values(), labels=age_groups.keys(), autopct=autopct_format(age_groups.values()),radius=1.2)
     plt.title(f'Salary Distribution by Age Group')
 
     plt.subplot(1, 3, 2)
-    plt.pie(PosVal.values(), labels=PosVal.keys(), autopct=autopct_format(PosVal.values()))
+    plt.pie(PosVal.values(), labels=PosVal.keys(), autopct=autopct_format(PosVal.values()),radius=1.2)
     plt.title(f'Salary Distribution by Position')
 
     plt.subplot(1, 3, 3)
-    plt.pie(total_salary_positions, labels=total_salary_positions.index, autopct=autopct_format(total_salary_positions))
+    plt.pie(total_salary_positions, labels=total_salary_positions.index, autopct=autopct_format(total_salary_positions),radius=1.2)
     plt.title(f'Salary Distribution based on Starters and Bench')
     plt.show()
 
