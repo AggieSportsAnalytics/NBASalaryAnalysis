@@ -29,11 +29,11 @@ def process_team_data(team_name):
     merged_stats.to_csv(f"{team_name}MergedStats.csv", index=False)
 
     # Remove the dollar sign from the data to clean it up
-    merged_stats['2023-24'] = merged_stats['2023-24'].replace('[\$,]', '', regex=True).astype(float)
+    merged_stats['Salary'] = merged_stats['Salary'].replace('[\$,]', '', regex=True).astype(float)
     starters = merged_stats.head(5)
     merged_stats['Role'] = merged_stats['Player'].apply(lambda x: 'Starters' if x in starters['Player'].tolist() else 'Bench')
 
-    total_salary_positions = merged_stats.groupby('Role').sum()
+    total_salary_positions = merged_stats.groupby('Role')['Salary'].sum()
     
     # Merge Roster and Salary data
     if 'Player' in Salary.columns and 'Player' in Roster.columns:
@@ -90,17 +90,17 @@ def process_team_data(team_name):
     team_record_str = f"{team_record['Team']}'s record: {team_record['Overall']}"
 
     # Plotting
-    plt.figure(figsize=(30, 10))
-    plt.subplot(1, 2, 1)
+    plt.figure(figsize=(24, 8))
+    plt.subplot(1, 3, 1)
     plt.pie(age_groups.values(), labels=age_groups.keys(), autopct=autopct_format(age_groups.values()))
     plt.title(f'Salary Distribution by Age Group for {team_name}\nTotal Salary: ${total_salary:,}\n{team_record_str}')
 
-    plt.subplot(1, 2, 2)
+    plt.subplot(1, 3, 2)
     plt.pie(PosVal.values(), labels=PosVal.keys(), autopct=autopct_format(PosVal.values()))
     plt.title(f'Salary Distribution by Position for {team_name}\nTotal Salary: ${total_salary:,}\n{team_record_str}')
     plt.show()
 
-    plt.subplot(2, 2, 1)
+    plt.subplot(1, 3, 3)
     plt.pie(total_salary_positions, labels=total_salary_positions.index, autopct=autopct_format(total_salary_positions))
     plt.title(f'Salary Distribution based on Starters and Bench for {team_name}\nTotal Salary: ${total_salary:}\n{team_record_str}')
     plt.show()
