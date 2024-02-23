@@ -1,11 +1,14 @@
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import math
 
 
 class Player(object):
-    def __init__(self, name, salary, age, points, assists, rebounds, steals, blocks, turnovers, fouls):
+    def __init__(self, name, firstName, salary, age, points, assists, rebounds, steals, blocks, turnovers, fouls):
+
         self.name = name
+        self.firstName = firstName
         self.salary = salary
         self.teamName = ""
         self.isSupermax = False
@@ -39,13 +42,13 @@ def process_team_data(team_name, averageCap):
     # Remove the dollar sign from the data to clean it up
     merged_data['2023-24'] = merged_data['2023-24'].replace('[\$,]', '', regex=True).astype(float)
     total_team_salary = merged_data['2023-24'].sum()
-    print(f"Total team salary: ${total_team_salary:,.0f}")
 
     #create a player object for each player in the csv
     players = []
     for index, row in merged_data.iterrows():
-        player = Player(row['Player'], row['2023-24'], row['Age_x'], row['PTS'], row['AST'], row['TRB'], row['STL'], row['BLK'], row['TOV'], row['PF'])
-        holder = checkForMaxMin(player, total_team_salary, averageCap)
+        parts = row['Player'].split(' ', 1)
+        player = Player(row['Player'], parts[1], row['2023-24'], row['Age_x'], row['PTS'], row['AST'], row['TRB'], row['STL'], row['BLK'], row['TOV'], row['PF'])
+        holder = checkForMaxMin(player, averageCap)
         if holder == 1:
             player.isSupermax = True
         elif holder == 0:
@@ -58,8 +61,8 @@ def process_team_data(team_name, averageCap):
     
     return players
 
-def checkForMaxMin(player, total_team_salary, averageCap):
-    if player.salary/averageCap >= 0.34: # is supermax
+def checkForMaxMin(player, averageCap):
+    if player.salary/averageCap >= 0.33: # is supermax
         return 1
     elif player.salary/averageCap >= 0.24: # is max
         return 0
@@ -70,18 +73,44 @@ def checkForMaxMin(player, total_team_salary, averageCap):
 
 
 teamsFinal = ['Blazers', 'Bucks', 'Bulls', 'Cavaliers', 'Celtics', 'Clippers', 'Grizzlies', 'Hawks', 'Heat', 'Hornets', 'Jazz', 'Kings', 'Knicks', 'Lakers', 'Magic', 'Mavericks', 'Nets', 'Nuggets', 'Pacers', 'Pelicans', 'Pistons', 'Raptors', 'Rockets', 'Spurs', 'Suns', 'Thunder', 'Wolves', 'Warriors', 'Wizards', 'Sixers']
-teams = ['Celtics', 'Clippers']
 players = []
 #range values
 averageCap = 135000000
-for team in teams:
+for team in teamsFinal:
     holderForPlayers = process_team_data(team, averageCap)
     players.append(holderForPlayers)
 
+supermax = []
+
 for team in players:
     for player in team:
-        print(player.name, player.salary, player.isSupermax, player.ismax, player.isMin, player.teamName)
-    print("\n")
+        if player.isSupermax:
+            supermax.append(player)
+
+supermax.sort(key=lambda x: x.salary, reverse=True)
+
+for player in supermax:
+    print(player.name)
+    print(player.salary)
+
+# make a two column bar chart of supermax players showing their salary and their points
+
+# add one bar for each players salary
+# add one bar for each players points
+
+X_axis = np.arange(len(supermax)) 
+fig = plt.figure(figsize = (20, 5))
+  
+plt.bar(X_axis, [x.points for x in supermax], 0.4, label = 'PPG', color = 'g') 
+
+
+
+plt.xticks(X_axis, [x.firstName for x in supermax]) 
+plt.xlabel("Players") 
+plt.ylabel("PPG") 
+plt.legend() 
+plt.show() 
+    
 
 #for team in teams:
  #   process_team_data(team)
