@@ -20,7 +20,7 @@ def process_team_data(team_name):
         return
     
     # Drop rows in Salary where 'Salary' is NaN
-    Salary = Salary.dropna(subset=['Salary'])
+    Salary = Salary.dropna(subset=['2023-24'])
 
     # Merge datasets based on player names
     merged_stats = pd.merge(Salary, Stats, on='Player', how='inner')
