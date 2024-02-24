@@ -141,7 +141,19 @@ def reviewPlayer(name, teamFinished, allPlayers, labelVal):
             temp = i
             break
     if allPlayers[temp].isSupermax:
-            reviewSuperMaxes(teamFinished)
+            reviewSuperMaxes(teamFinished, labelVal)
+            counter, expected = overUnderPlayer(allPlayers[temp], allPlayers, labelVal)
+
+            if counter == 1:
+                print(allPlayers[temp].name, "is overachieving.")
+                print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", allPlayers[temp].PER, "PER compared to the average of ", round(expected), "PER for his tier.")
+            elif counter == -1:
+                print(allPlayers[temp].name, "is underachieving.")
+                print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", allPlayers[temp].PER, "PER compared to the average of ", round(expected), "PER for his tier.")
+            else:
+                print(allPlayers[temp].name, "is performing as expected.")
+                print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", allPlayers[temp].PER, "PER compared to the average of ", round(expected), "PER for his tier.")
+
     else:
         holder = []
         #find the index of the player in the allPlayers array
@@ -283,10 +295,10 @@ def reviewTeam(teamName, teamFinished, labelVal):
             for player in team.players:
                 if player.over:
                     print(player.name, "is overachieving.")
-                    print(player.name, "is making $", round(player.salary), "and is averaging ", player.PER, "PER compared to the average of ", round(getattr(nba, player.tier)), "PER for his tier.")
+                    print(player.name, "is making $",round(player.salary), "and is averaging ", player.PER, "PER compared to the average of ", round(getattr(nba, player.tier)), "PER for his tier.")
                 elif player.under:
                     print(player.name, "is underachieving.")
-                    print(player.name, "is making $", round(player.salary), "and is averaging ", player.PER, "PER compared to the average of ", round(getattr(nba, player.tier)), "PER for his tier.")
+                    print(player.name, "is making $",round(player.salary), "and is averaging ", player.PER, "PER compared to the average of ", round(getattr(nba, player.tier)), "PER for his tier.")
 
     print("The ", teamName, "have ", over, "overachieving player(s), ", under, "underachieving player(s).")
 
@@ -294,6 +306,9 @@ def overUnderPlayer (player, allPlayers, labelVal):
     superAvg, maxAvg, minAvg, t1, t2, t3, t4, t5, t6, sdSuper, sdMax, sdMin, sd1, sd2, sd3, sd4, sd5, sd6, nba = segregatingContracts(teamFinished, allPlayers, labelVal)
     tier = checkTier(player)
     if tier == "Supermax":
+        if player.PER > superAvg + sdSuper:
+            player.over = True
+            return 1, round(getattr(nba, player.tier))
         if player.PER < superAvg - sdSuper:
             player.under = True
             return -1, round(getattr(nba, player.tier))
@@ -376,6 +391,9 @@ def overVsUnder (team, allPlayers, labelVal):
     for player in team.players:
         tier = checkTier(player)
         if tier == "Supermax":
+            if player.PER > superAvg + sdSuper:
+                over += 1
+                player.over = True
             if player.PER < superAvg - sdSuper:
                 under += 1
                 player.under = True
