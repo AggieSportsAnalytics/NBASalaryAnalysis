@@ -29,7 +29,7 @@ def process_team_data(team_name):
     merged_stats.to_csv(f"{team_name}MergedStats.csv", index=False)
 
     # Remove the dollar sign from the data to clean it up
-    merged_stats['Salary'] = merged_stats['Salary'].replace('[\$,]', '', regex=True).astype(float)
+    merged_stats['2023-24'] = merged_stats['2023-24'].replace('[\$,]', '', regex=True).astype(float)
     starters = merged_stats.head(5)
     merged_stats['Role'] = merged_stats['Player'].apply(lambda x: 'Starters' if x in starters['Player'].tolist() else 'Bench')
 
@@ -43,15 +43,15 @@ def process_team_data(team_name):
         return
 
     # Process merged data for salary
-    merged_data['Salary'] = merged_data['Salary'].replace('[\$,]', '', regex=True).astype(int)
-    total_salary = merged_data['Salary'].sum()
+    merged_data['2023-24'] = merged_data['2023-24'].replace('[\$,]', '', regex=True).astype(int)
+    total_salary = merged_data['2023-24'].sum()
 
 
     # Age group processing
     age_groups = {'Under 23': 0, '23-28': 0, '29-33': 0, 'Over 33': 0}
     for _, row in merged_data.iterrows():
         age = row['Age']
-        salary = row['Salary']
+        salary = row['2023-24']
         if age < 23:
             age_groups['Under 23'] += salary
         elif 23 <= age <= 28:
