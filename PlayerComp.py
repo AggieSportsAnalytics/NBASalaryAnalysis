@@ -506,12 +506,3 @@ else:
             break
     else:
         print("Player not found.")
-
-
-
-
-
-
-
-
-
