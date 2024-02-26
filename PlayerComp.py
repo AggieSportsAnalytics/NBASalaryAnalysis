@@ -159,22 +159,21 @@ def reviewPlayer(name, teamFinished, allPlayers, labelVal):
         #find the index of the player in the allPlayers array
         
         #find the players that are within 5% of the player's salary
-        for i in range(temp-5, temp+5):
+        for i in range(temp-7, temp+7):
             if i >= 0 and i < len(allPlayers):
                 holder.append(allPlayers[i])
         graph(holder, 10, labelVal, 9)
         counter, expected = overUnderPlayer(allPlayers[temp], allPlayers, labelVal)
         if counter == 1:
             print(allPlayers[temp].name, "is overachieving.")
-            print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", allPlayers[temp].PER, "PER compared to the average of ", round(expected), "PER for his tier.")
+            print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", round(allPlayers[temp].PER), "PER compared to the average of ", round(expected), "PER for his tier.")
         elif counter == -1:
             print(allPlayers[temp].name, "is underachieving.")
-            print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", allPlayers[temp].PER, "PER compared to the average of ", round(expected), "PER for his tier.")
+            print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", round(allPlayers[temp].PER), "PER compared to the average of ", round(expected), "PER for his tier.")
         else:
             print(allPlayers[temp].name, "is performing as expected.")
-            print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", allPlayers[temp].PER, "PER compared to the average of ", round(expected), "PER for his tier.")
+            print(allPlayers[temp].name, "is making $", round(allPlayers[temp].salary), "and is averaging ", round(allPlayers[temp].PER), "PER compared to the average of ", round(expected), "PER for his tier.")
 
-    #check if player is over or under achieving
     print(allPlayers[temp].name, allPlayers[temp].teamName)
 
 def segregatingContracts(teamFinished, allPlayers, labelVal):
