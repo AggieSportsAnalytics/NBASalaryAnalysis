@@ -58,9 +58,16 @@ There is more to this function but it essentially calculates the standard deviat
 
 ## Comparing Salary distrbution from teams
 
-<img width="487" alt="image" src="https://github.com/AggieSportsAnalytics/NBASalaryAnalysis/assets/68085422/9226c0f7-bf2d-464a-9b9a-d66493774800">
+<img width="1067" alt="image" src="https://github.com/AggieSportsAnalytics/NBASalaryAnalysis/assets/68085422/37deff39-58b0-4209-b2b7-aed2251b5902">
+
+
 
 **This image has the information on each of the following factors we used to distribute salary on the Thunder**
+
+<img width="1064" alt="image" src="https://github.com/AggieSportsAnalytics/NBASalaryAnalysis/assets/68085422/85b3abc7-092a-469d-ab35-d8903fc607cb">
+
+
+**This image has the information on each of the following factors we used to distribute salary on the Lakers**
 
 One Way we categorized our data was based on a Player's position. We grouped the total salaries of Gaurds, Forwards and Centers and divided by the total team salaries. After calculating that percentage, we plotted these values on a pie chart for specific teams.
 
