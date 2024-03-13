@@ -90,7 +90,7 @@ After obtaining multiple csv files containing a player's salary and stats, we me
 
 Another criteria was if a player is a starter or a bench player. We determine player roles (starters and bench) based on predefined criteria. It calculates and compares the total salary of starters and bench players. This provides insights into the financial structure of the team based on player roles.
 
-### Code
+### 💻 Code
 
 For retrieving and graphing data of player salary, team standings, and player stats, we use Pandas and Matplotlib libraries.
 
@@ -127,7 +127,7 @@ plt.show()
 
 To compare salaries based upon age groups, I chose four age groups which accurately depict the different types of contracts in the NBA. The first age group, 23 and under, represents players on rookie contracts. Next, the age groups between 23-28 and 29-33 represent most NBA players' next two major contracts. Finally, the age group 33+ represents the older players remaining in the league, often operating on league minimum contracts. The salary analyzer calculates what percent of each team’s total salary cap falls under each age group.
 
-### Code
+### 💻 Code
 
 For retrieving and graphing data of player salary, team standings, and player stats, we use Pandas and Matplotlib libraries.
 
