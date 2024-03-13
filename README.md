@@ -132,8 +132,6 @@ plt.title(f'Salary Distribution based on Starters and Bench for {team_record["Te
 plt.show()
 ```
 
-To compare salaries based upon age groups, I chose four age groups which accurately depict the different types of contracts in the NBA. The first age group, 23 and under, represents players on rookie contracts. Next, the age groups between 23-28 and 29-33 represent most NBA players' next two major contracts. Finally, the age group 33+ represents the older players remaining in the league, often operating on league minimum contracts. The salary analyzer calculates what percent of each team’s total salary cap falls under each age group.
-
 ### 💻 Code
 
 For retrieving and graphing data of player salary, team standings, and player stats, we use Pandas and Matplotlib libraries.
@@ -148,7 +146,8 @@ salary_data = pd.read_csv(salary_file)
 standings_data = pd.read_csv(standings_file)
 ```
 \
-From the "Salary" team csv files files inputted, I then separated the players by age group.
+To compare salaries based upon age groups, we chose four age groups which accurately depict the different types of contracts in the NBA. The first age group, 23 and under, represents players on rookie contracts. Next, the age groups between 23-28 and 29-33 represent most NBA players' next two major contracts. Finally, the age group 33+ represents the older players remaining in the league, often operating on league minimum contracts. The salary analyzer calculates what percent of each team’s total salary cap falls under each age group.
+From the "Salary" team csv files files inputted, we then separated the players by age group.
 ```py
 # Age group processing
 age_groups = {'Under 23': 0, '23-28': 0, '29-33': 0, 'Over 33': 0}
