@@ -69,7 +69,7 @@ There is more to this function but it essentially calculates the standard deviat
 
 **This image has the information on each of the following factors we used to distribute salary on the Lakers**
 
-One Way we categorized our data was based on a Player's position. We grouped the total salaries of Gaurds, Forwards and Centers and divided by the total team salaries. After calculating that percentage, we plotted these values on a pie chart for specific teams.
+One Way we categorized our data was based on a Player's position. We grouped the total salaries of Guards, Forwards and Centers and divided by the total team salaries. After calculating that percentage, we plotted these values on a pie chart for specific teams.
 
 ### 💻 Code
 
